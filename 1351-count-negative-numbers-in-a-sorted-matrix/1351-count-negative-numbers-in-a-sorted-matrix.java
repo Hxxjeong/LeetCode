@@ -12,14 +12,18 @@ class Solution {
         }
         
         // 내림차순 정렬되어 있으므로 음수를 만나면 이후 원소도 모두 음수
-        for (int i=0; i<grid.length; i++) {
-            int rowLength = grid[i].length; // 각 행의 길이
-            int col = rowLength - 1;    // 제일 끝 원소
+        for (int i = 0; i < grid.length; i++) {
+            int rowLength = grid[i].length;
+            int low = 0, high = rowLength - 1;
             
-            while (col >= 0 && grid[i][col] < 0) col--;
+            while (low <= high) {
+                int mid = low + (high-low)/2;
+                if (grid[i][mid] < 0) high = mid - 1;
+                else low = mid + 1;
+            }
             
-            // col 이후는 모두 음수
-            answer += rowLength - (col+1);
+            // low 이후 음수
+            answer += rowLength - low;
         }
         
         return answer;
